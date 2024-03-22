@@ -2,6 +2,7 @@
 	import { Player } from '$components';
 	import { msToTimes } from '$helpers';
 	import { Clock8, ListPlus } from 'lucide-svelte';
+	import playingGift from '$assets/playing.gif';
 
 	let currentlyPlaying: string | null = null;
 	let isPaused = false;
@@ -25,7 +26,11 @@
 	{#each tracks as track, index}
 		<div class="row">
 			<div class="number-column">
-				<span class="number">{index + 1}</span>
+				{#if currentlyPlaying === track.id && !isPaused}
+					<img class="playing-gif" src={playingGift} alt="" />
+				{:else}
+					<span class="number">{index + 1}</span>
+				{/if}
 				<div class="player">
 					<Player
 						{track}
@@ -97,6 +102,9 @@
 				span.number {
 					font-size: functions.toRem(14);
 					color: var(--light-gray);
+				}
+				.playing-gif {
+					width: 12px;
 				}
 			}
 			.info-column {
