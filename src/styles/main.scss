@@ -1,9 +1,11 @@
 @use 'functions';
+@use '@unsass/breakpoint';
 @import '@fontsource/metropolis';
 @import '@fontsource/metropolis/300';
 @import '@fontsource/metropolis/500';
 @import '@fontsource/metropolis/600';
 @import '@fontsource/metropolis/700';
+@import 'tippy-theme';
 
 :root {
 	--bg-color: #191414;
@@ -84,4 +86,58 @@ a {
 		outline: 2px solid var(--accent-color);
 		outline-offset: 2px;
 	}
+}
+
+.visually-hidden, .skip-link:not(:focus) {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.skip-link:focus {
+  position: absolute;
+  z-index: 200;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  padding: 1rem;
+  top: 10px;
+  left: 10px;
+  outline: 2px solid var(--accent-color);
+  font-weight: 500;
+}
+
+#nprogress .bar {
+  background: var(--accent-color) !important;
+}
+
+
+.grid-items {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+  @include breakpoint.up('sm') {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @include breakpoint.up('md') {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @include breakpoint.up('xl') {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .card {
+    height: 100%;
+  }
+}
+
+@for $i from 1 through 3 {
+  .truncate-#{$i} {
+    display: -webkit-box;
+    -webkit-line-clamp: $i;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }

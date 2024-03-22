@@ -1,15 +1,17 @@
 <script lang="ts">
-	import { Home, ListMusic, Search, type Icon } from 'lucide-svelte';
+	import { Home, Album, ListMusic, Search, Menu, X, type Icon } from 'lucide-svelte';
 	import { tick, type ComponentType } from 'svelte';
 	import Logo from '$assets/Spotify_Logo_RGB_White.png';
 	import { page } from '$app/stores';
 	import { fade } from 'svelte/transition';
 	import { beforeNavigate } from '$app/navigation';
+	import { IconButton } from '$components';
 
 	export let desktop: boolean;
 	let isMobileMenuOpen = false;
-	let openMenuButton: HTMLButtonElement;
-	let closeMenuButton: HTMLButtonElement;
+	let openMenuButton: IconButton;
+	let closeMenuButton: IconButton;
+	let lastFocusableElement: HTMLAnchorElement;
 
 	$: isOpen = !desktop && isMobileMenuOpen;
 
@@ -28,17 +30,47 @@
 			path: '/playlists',
 			label: 'Playlists',
 			icon: ListMusic
+		},
+		// about page
+		{
+			path: '/about',
+			label: 'About',
+			icon: Album
 		}
 	];
 
 	async function openMenu() {
 		isMobileMenuOpen = true;
 		await tick();
-		closeMenuButton.focus();
+		// closeMenuButton.focus();
+		closeMenuButton.getButton().focus();
 	}
 	function closeMenu() {
 		isMobileMenuOpen = false;
-		openMenuButton.focus();
+		// openMenuButton.focus();
+		openMenuButton.getButton().focus();
+	}
+
+	function moveFocusToBottom(e: KeyboardEvent) {
+		if (desktop) return;
+		if (e.key === 'Tab' && e.shiftKey) {
+			e.preventDefault();
+			lastFocusableElement.focus();
+		}
+	}
+	function moveFocusToTop(e: KeyboardEvent) {
+		if (desktop) return;
+		if (e.key === 'Tab' && !e.shiftKey) {
+			e.preventDefault();
+			// closeMenuButton.focus();
+			closeMenuButton.getButton().focus();
+		}
+	}
+
+	function handleEscape(e: KeyboardEvent) {
+		if (e.key === 'Escape') {
+			closeMenu();
+		}
 	}
 
 	beforeNavigate(() => (isMobileMenuOpen = false));
@@ -65,31 +97,55 @@
 	{/if}
 	<nav aria-label="Main">
 		{#if !desktop}
-			<button on:click={openMenu} bind:this={openMenuButton} aria-expanded={isOpen}>Open</button>
+			<IconButton
+				icon={Menu}
+				label="Open menu"
+				on:click={openMenu}
+				bind:this={openMenuButton}
+				aria-expanded={isOpen}
+				class="menu-button"
+			/>
 		{/if}
 		<div
 			class="nav-content-inner"
-			class:is-hidden={!isOpen}
-			style:visibility={isOpen ? 'visible' : 'hidden'}
+			class:is-hidden={!isOpen && !desktop}
+			style:visibility={isOpen || desktop ? 'visible' : 'hidden'}
+			on:keyup={handleEscape}
+			role="button"
+			tabindex="0"
 		>
 			{#if !desktop}
-				<button on:click={closeMenu} bind:this={closeMenuButton}>Close</button>
+				<IconButton
+					icon={X}
+					label="Close menu"
+					on:click={closeMenu}
+					bind:this={closeMenuButton}
+					on:keydown={moveFocusToBottom}
+					class="close-menu-button"
+				/>
 			{/if}
 			<img src={Logo} alt="Spotify Logo" class="logo" />
 			<ul>
-				{#each menuItems as menu}
+				{#each menuItems as menu, index}
+					{@const iconProps = {
+						focusable: 'true',
+						'aria-hidden': true,
+						color: 'var(--text-color)',
+						size: 26,
+						strokeWidth: 1.5
+					}}
 					<li class:active={menu.path === $page.url.pathname}>
-						<a href={menu.path}>
-							<svelte:component
-								this={menu.icon}
-								focusable="true"
-								aria-hidden="true"
-								color="var(--text-color)"
-								size={26}
-								strokeWidth={1.5}
-							/>
-							{menu.label}</a
-						>
+						{#if menuItems.length === index + 1}
+							<a href={menu.path} bind:this={lastFocusableElement} on:keydown={moveFocusToTop}>
+								<svelte:component this={menu.icon} {...iconProps} />
+								{menu.label}
+							</a>
+						{:else}
+							<a href={menu.path}>
+								<svelte:component this={menu.icon} {...iconProps} />
+								{menu.label}</a
+							>
+						{/if}
 					</li>
 				{/each}
 			</ul>
@@ -99,6 +155,16 @@
 
 <style lang="scss">
 	.nav-content {
+		:global(.menu-button) {
+			@include breakpoint.up('md') {
+				display: none;
+			}
+		}
+		:global(.close-menu-button) {
+			position: absolute;
+			top: 20px;
+			right: 20px;
+		}
 		&.desktop {
 			position: sticky;
 			top: 0;
@@ -148,6 +214,12 @@
 			height: 100vh;
 			overflow: auto;
 			display: none;
+			:global(html.no-js) & {
+				@include breakpoint.down('md') {
+					display: block;
+					height: auto;
+				}
+			}
 
 			.logo {
 				width: 130px;
