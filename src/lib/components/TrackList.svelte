@@ -3,6 +3,9 @@
 	import { msToTimes } from '$helpers';
 	import { Clock8, ListPlus } from 'lucide-svelte';
 
+	let currentlyPlaying: string | null = null;
+	let isPaused = false;
+
 	export let tracks: SpotifyApi.TrackObjectFull[] | SpotifyApi.TrackObjectSimplified[];
 </script>
 
@@ -25,9 +28,12 @@
 				<span class="number">{index + 1}</span>
 				<div class="player">
 					<Player
-						on:play={(e) => console.log(e.detail.track)}
-						on:pause={(e) => console.log(e.detail.track)}
 						{track}
+						on:play={(e) => {
+							currentlyPlaying = e.detail.track.id;
+							isPaused = false;
+						}}
+						on:pause={(e) => (isPaused = e.detail.track.id === currentlyPlaying)}
 					/>
 				</div>
 			</div>
