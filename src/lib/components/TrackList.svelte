@@ -24,7 +24,7 @@
 		<div class="actions-column" />
 	</div>
 	{#each tracks as track, index}
-		<div class="row">
+		<div class="row" class:is-current={currentlyPlaying === track.id}>
 			<div class="number-column">
 				{#if currentlyPlaying === track.id && !isPaused}
 					<img class="playing-gif" src={playingGift} alt="" />
@@ -73,6 +73,12 @@
 			align-items: center;
 			padding: 7px 5px;
 			border-radius: 5px;
+			&.is-current {
+				.info-column .track-title h4,
+				number-column span.number {
+					color: var(--accent-color);
+				}
+			}
 			&.header {
 				border-bottom: 1px solid var(--border);
 				padding: 5px;
