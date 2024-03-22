@@ -91,6 +91,14 @@
 			&:not(.header) {
 				&:hover {
 					background-color: rgba(255, 255, 255, 0.05);
+					.number-column {
+						.player {
+							display: block;
+						}
+						span.number {
+							display: none;
+						}
+					}
 				}
 			}
 			.number-column {
@@ -105,6 +113,9 @@
 				}
 				.playing-gif {
 					width: 12px;
+				}
+				.player {
+					display: none;
 				}
 			}
 			.info-column {
