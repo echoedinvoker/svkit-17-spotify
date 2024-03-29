@@ -73,6 +73,14 @@
 			align-items: center;
 			padding: 7px 5px;
 			border-radius: 5px;
+			@include breakpoint.down('md') {
+				:global(.no-js) & {
+					flex-direction: column;
+					background-color: rgba(255, 255, 255, 0.03);
+					padding: 20px;
+					margin-bottom: 20px;
+				}
+			}
 			&.is-current {
 				.info-column .track-title h4,
 				number-column span.number {
@@ -84,6 +92,11 @@
 				padding: 5px;
 				margin-bottom: 15px;
 				border-radius: 0;
+				@include breakpoint.down('md') {
+					:global(.no-js) & {
+						display: none;
+					}
+				}
 				.track-title {
 					color: var(--light-gray);
 					font-size: functions.toRem(12);
