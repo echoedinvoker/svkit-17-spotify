@@ -123,6 +123,16 @@
 				.player {
 					display: none;
 				}
+				:global(html.no-js) & {
+					width: 200px;
+					display: flex;
+					align-items: center;
+					.player {
+						display: block;
+						width: 100%;
+						margin-left: 10px;
+					}
+				}
 			}
 			.info-column {
 				flex: 1;
