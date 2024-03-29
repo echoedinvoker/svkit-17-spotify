@@ -140,6 +140,11 @@
 					width: 200px;
 					display: flex;
 					align-items: center;
+					@include breakpoint.down('md') {
+						width: 100%;
+						margin-right: 0;
+						margin-bottom: 15px;
+					}
 					.player {
 						display: block;
 						width: 100%;
