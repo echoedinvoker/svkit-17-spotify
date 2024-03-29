@@ -116,6 +116,12 @@
 						}
 						span.number {
 							display: none;
+							:global(.no-js) & {
+								display: block;
+							}
+						}
+						.playing-gif {
+							display: none;
 						}
 					}
 				}
@@ -154,6 +160,11 @@
 			}
 			.info-column {
 				flex: 1;
+				@include breakpoint.down('md') {
+					:global(.no-js) & {
+						width: 100%;
+					}
+				}
 				.track-title {
 					display: flex;
 					align-items: center;
@@ -189,6 +200,12 @@
 				span.duration {
 					color: var(--light-gray);
 					font-size: functions.toRem(14);
+				}
+				@include breakpoint.down('md') {
+					:global(.no-js) & {
+						width: 100%;
+						margin: 10px 0;
+					}
 				}
 			}
 			.actions-column {
