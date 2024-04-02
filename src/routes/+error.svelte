@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { Button } from '$components';
+	import { Button, LogoutButton } from '$components';
 </script>
 
 <svelte:head>
@@ -16,6 +16,11 @@
 			<Button element="a" href="/">Home</Button>
 			<Button element="a" href="/search">Search</Button>
 		</div>
+	{/if}
+
+	{#if $page.status === 401}
+		<p>You are not authorized to view this page. Please log in.</p>
+		<LogoutButton />
 	{/if}
 </div>
 
