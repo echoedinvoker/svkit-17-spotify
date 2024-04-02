@@ -12,7 +12,7 @@ export const load: LayoutServerLoad = async ({ cookies, fetch, url }) => {
     };
   }
 
-  const profileRes = await fetch(`${SPOTIFY_BASE_URL}/me`, {
+  const profileRes = await fetddddch(`${SPOTIFY_BASE_URL}/me`, {
     headers: {
       Authorization: `Bearer ${accessToken}`
     }
