@@ -18,3 +18,21 @@
 		</div>
 	{/if}
 </div>
+
+<style lang="scss">
+	.content {
+		text-align: center;
+	}
+	h1 {
+		font-size: functions.toRem(40);
+	}
+	p {
+		font-size: functions.toRem(20);
+	}
+	.buttons {
+		margin-top: 40px;
+		:global(a) {
+			margin: 0 5px;
+		}
+	}
+</style>
