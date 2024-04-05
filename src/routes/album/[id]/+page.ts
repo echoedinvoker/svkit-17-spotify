@@ -2,7 +2,10 @@ import { fetchRefresh } from "$helpers";
 import { error, type NumericRange } from "@sveltejs/kit";
 import type { PageLoad } from "./$types";
 
-export const load: PageLoad = async ({ fetch, params }) => {
+export const load: PageLoad = async ({ fetch, params, depends, route }) => {
+
+  depends(`api:${route.id}`)
+
   const { id } = params;
   const res = await fetchRefresh(fetch, `/api/spotify/albums/${id}aaa`);
 
