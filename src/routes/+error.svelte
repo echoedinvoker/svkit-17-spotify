@@ -1,9 +1,10 @@
 <script lang="ts">
+	import { invalidate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { Button, LogoutButton } from '$components';
 
 	async function handleRetry() {
-		console.log($page.route.id);
+		await invalidate(`app:${$page.route.id}`);
 	}
 </script>
 
