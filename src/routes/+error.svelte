@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { Button, LogoutButton } from '$components';
+
+	async function handleRetry() {
+		console.log($page.route.id);
+	}
 </script>
 
 <svelte:head>
@@ -23,6 +27,10 @@
 		<div class="buttons">
 			<LogoutButton />
 		</div>
+	{/if}
+
+	{#if ![401, 404].includes($page.status)}
+		<Button element="button" on:click={handleRetry}>Retry</Button>
 	{/if}
 </div>
 
