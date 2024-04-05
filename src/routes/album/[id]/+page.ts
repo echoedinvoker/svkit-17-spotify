@@ -4,7 +4,7 @@ import type { PageLoad } from "./$types";
 
 export const load: PageLoad = async ({ fetch, params }) => {
   const { id } = params;
-  const res = await fetchRefresh(fetch, `/api/spotify/albums/${id}aaa`);
+  const res = await fetchRefresh(fetch, `/api/spotify/albums/${id}`);
 
   if (!res.ok) {
     throw error(res.status as NumericRange<400, 599>, 'Failed to load album!')

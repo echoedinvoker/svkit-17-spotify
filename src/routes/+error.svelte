@@ -20,7 +20,9 @@
 
 	{#if $page.status === 401}
 		<p>You are not authorized to view this page. Please log in.</p>
-		<LogoutButton />
+		<div class="buttons">
+			<LogoutButton />
+		</div>
 	{/if}
 </div>
 
