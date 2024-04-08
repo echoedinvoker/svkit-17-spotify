@@ -11,8 +11,6 @@ export const load: PageLoad = async ({ fetch: _fetch, params }) => {
   }
   const playlist: SpotifyApi.SinglePlaylistResponse = await playlistRes.json()
 
-  console.log(playlist)
-
   let color = null
   if (playlist.images.length > 0) {
     const colorRes = await fetch(`/api/average-color?${new URLSearchParams({
@@ -24,5 +22,9 @@ export const load: PageLoad = async ({ fetch: _fetch, params }) => {
     }
   }
 
-  console.log(color)
+  return {
+    playlist,
+    color,
+    title: playlist.name
+  }
 }
