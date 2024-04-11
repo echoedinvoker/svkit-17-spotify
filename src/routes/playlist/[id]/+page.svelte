@@ -27,7 +27,7 @@
 	const loadMoreTracks = async () => {
 		if (!tracks.next) return;
 		isLoading = true;
-		const res = await fetch(tracks.next);
+		const res = await fetch(tracks.next.replace('https://api.spotify.com/v1/', '/api/spotify/'));
 		const resJSON = await res.json();
 		if (res.ok) {
 			tracks = {
