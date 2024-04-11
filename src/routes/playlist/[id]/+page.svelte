@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Button } from '$components';
 	import ItemPage from '$components/ItemPage.svelte';
+	import Navigation from '$components/Navigation.svelte';
 	import TrackList from '$components/TrackList.svelte';
 	import type { PageData } from './$types';
 
@@ -38,6 +39,13 @@
 
 	{#if playlist.tracks.items.length > 0}
 		<TrackList tracks={filteredTracks} />
+		{#if tracks.next}
+			<div class="load-more">
+				<Button element="button" variant="outline">
+					Load More <span class="visually-hidden">Tracks</span>
+				</Button>
+			</div>
+		{/if}
 	{:else}
 		<div class="empty-playlist">
 			<p>No items added to this playlist yet.</p>
@@ -75,5 +83,10 @@
 				font-weight: 600;
 			}
 		}
+	}
+
+	.load-more {
+		padding: 15px;
+		text-align: center;
 	}
 </style>
