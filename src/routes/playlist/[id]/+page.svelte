@@ -65,4 +65,15 @@
 		font-size: functions.toRem(18);
 		margin-bottom: 0;
 	}
+
+	.meta {
+		font-size: functions.toRem(13);
+		margin-top: 10px;
+		span {
+			margin-right: 5px;
+			&:first-child {
+				font-weight: 600;
+			}
+		}
+	}
 </style>
