@@ -6,4 +6,15 @@
 	$: color = data.color;
 	$: playlist = data.playlist;
 	$: tracks = data.playlist.tracks;
+
+	let filteredTracks: SpotifyApi.TrackObjectFull[];
+
+	$: {
+		filteredTracks = [];
+		tracks.items.forEach((item) => {
+			if (item.track) {
+				filteredTracks = [...filteredTracks, item.track];
+			}
+		});
+	}
 </script>
