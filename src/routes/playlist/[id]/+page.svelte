@@ -18,6 +18,8 @@
 			}
 		});
 	}
+
+	const followersFormat = Intl.NumberFormat('en', { notation: 'compact' });
 </script>
 
 <ItemPage title={playlist.name} image={playlist.images[0]?.url} {color} type={playlist.type}>
@@ -27,7 +29,7 @@
 		</p>
 		<p class="meta">
 			<span>{playlist.owner.display_name}</span>
-			<span>{playlist.followers.total}</span>
+			<span>{followersFormat.format(playlist.followers.total)}</span>
 			<span>{playlist.tracks.total} Tracks</span>
 		</p>
 	</div>
