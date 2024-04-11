@@ -21,5 +21,14 @@
 </script>
 
 <ItemPage title={playlist.name} image={playlist.images[0]?.url} {color} type={playlist.type}>
-	></ItemPage
->
+	<div slot="meta">
+		<p class="playlist-description">
+			{@html playlist.description}
+		</p>
+		<p class="meta">
+			<span>{playlist.owner.display_name}</span>
+			<span>{playlist.followers.total}</span>
+			<span>{playlist.tracks.total} Tracks</span>
+		</p>
+	</div>
+</ItemPage>
