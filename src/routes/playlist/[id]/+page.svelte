@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { Button } from '$components';
 	import ItemPage from '$components/ItemPage.svelte';
-	import Navigation from '$components/Navigation.svelte';
 	import TrackList from '$components/TrackList.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+	let isLoading = false;
 
 	$: color = data.color;
 	$: playlist = data.playlist;
@@ -23,6 +23,22 @@
 	}
 
 	const followersFormat = Intl.NumberFormat('en', { notation: 'compact' });
+
+	const loadMoreTracks = async () => {
+		if (!tracks.next) return;
+		isLoading = true;
+		const res = await fetch(tracks.next);
+		const resJSON = await res.json();
+		if (res.ok) {
+			tracks = {
+				...resJSON,
+				items: [...tracks.items, ...resJSON.items]
+			};
+		} else {
+			alert(resJSON.error.message || 'An error occurred');
+		}
+		isLoading = false;
+	};
 </script>
 
 <ItemPage title={playlist.name} image={playlist.images[0]?.url} {color} type={playlist.type}>
@@ -41,7 +57,7 @@
 		<TrackList tracks={filteredTracks} />
 		{#if tracks.next}
 			<div class="load-more">
-				<Button element="button" variant="outline">
+				<Button element="button" variant="outline" disabled={isLoading} on:click={loadMoreTracks}>
 					Load More <span class="visually-hidden">Tracks</span>
 				</Button>
 			</div>
