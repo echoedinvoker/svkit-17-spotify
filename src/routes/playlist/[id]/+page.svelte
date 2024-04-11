@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { Button } from '$components';
 	import ItemPage from '$components/ItemPage.svelte';
+	import TrackList from '$components/TrackList.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -33,4 +35,14 @@
 			<span>{playlist.tracks.total} Tracks</span>
 		</p>
 	</div>
+
+	{#if playlist.tracks.items.length > 0}
+		<TrackList tracks={filteredTracks} />
+	{:else}
+		<div class="empty-playlist">
+			<p>No items added to this playlist yet.</p>
+			<Button element="a" href="/search">Search for Content</Button>
+			<Button element="a" href="/playlists">View All Playlists</Button>
+		</div>
+	{/if}
 </ItemPage>
