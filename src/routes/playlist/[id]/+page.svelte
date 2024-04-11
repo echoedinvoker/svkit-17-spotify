@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ItemPage from '$components/ItemPage.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -18,3 +19,7 @@
 		});
 	}
 </script>
+
+<ItemPage title={playlist.name} image={playlist.images[0]?.url} {color} type={playlist.type}>
+	></ItemPage
+>
