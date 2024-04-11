@@ -46,3 +46,17 @@
 		</div>
 	{/if}
 </ItemPage>
+
+<style lang="scss">
+	.empty-playlist {
+		text-align: center;
+		margin-top: 40px;
+		p {
+			font-size: functions.toRem(22);
+			font-weight: 600;
+		}
+		:global(a) {
+			margin: 0 10px;
+		}
+	}
+</style>
