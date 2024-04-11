@@ -59,4 +59,10 @@
 			margin: 0 10px;
 		}
 	}
+
+	.playlist-description {
+		color: var(--light-gray);
+		font-size: functions.toRem(18);
+		margin-bottom: 0;
+	}
 </style>
